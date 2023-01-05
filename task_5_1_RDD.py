@@ -1,11 +1,7 @@
 import re
 
+from config import URL, NAME_APP, PATH_TO_FILE, PATH_TO_FILE_RESULT
 from pyspark.context import SparkContext, RDD
-
-# url нашей ФС
-URL = 'vpn.xamex.ru:22'
-# Название приложения(Не понял зачем, но указать его надо!)
-NAME_APP = 'app_task_5_1_RDD'
 
 
 # Просто обёртки над Spark RDD API:
@@ -34,9 +30,7 @@ def save_as_text_file_obj(obj: RDD, path: str):
 def main():
     sc: SparkContext = SparkContext(URL, NAME_APP)
 
-    # Тут должен быть путь до файла с дампом твиттера, который надо закинуть в Spark (hdfs:///user/...)
-    path_to_file = 'data/tweets.csv'
-    lines: RDD = get_file_from_spark(sc, path_to_file)
+    lines: RDD = get_file_from_spark(sc, PATH_TO_FILE)
 
     # Отрезаем заголовок в CSV файле, так как он не нужен
     header = lines.first()
@@ -67,7 +61,7 @@ def main():
                                                          rec[is_retweet_index]))
 
     # max_temp: RDD = reduceByKey_obj(result_tuples, lambda a, b: a if a > b else b)
-    save_as_text_file_obj(result_tuples, 'task_5_1_output')
+    save_as_text_file_obj(result_tuples, PATH_TO_FILE_RESULT)
 
 
 if __name__ == '__main__':
