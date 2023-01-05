@@ -29,10 +29,13 @@ def main():
     '''
         Найти все твиты, которые ретвитнули, а сам твит 2015 года
     '''
+    tweet_text = 'tweet_text'
+    tweet_time = 'tweet_time'
+    is_retweet = 'is_retweet'
 
-    request_sql = f"SELECT tweet_text, tweet_time, is_retweet " \
+    request_sql = f"SELECT {tweet_text}, {tweet_time}, {is_retweet} " \
                   f"FROM global_temp.{NAME_DB} " \
-                  f"WHERE (is_retweet = True) AND (tweet_time LIKE '2015%')"
+                  f"WHERE ({is_retweet} = True) AND ({tweet_time} LIKE '2015%')"
     spark.sql(request_sql).show()
 
 
