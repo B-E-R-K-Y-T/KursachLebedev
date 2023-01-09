@@ -1,4 +1,5 @@
 from config import URL, NAME_APP_SQL, PATH_TO_FILE, NAME_DB, PATH_TO_FILE_RESULT
+from pyspark import RDD
 from pyspark.sql import SparkSession
 
 
@@ -43,7 +44,8 @@ def main():
     spark.sql(request_sql).show()
 
     # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
-    spark.createDataFrame(request_sql).saveAsTextFile(PATH_TO_FILE_RESULT)
+    result = spark.sql(request_sql).toJSON()
+    result.saveAsTextFile()
 
 
 if __name__ == '__main__':
