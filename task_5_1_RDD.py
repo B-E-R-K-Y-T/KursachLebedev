@@ -64,7 +64,6 @@ def main():
                                                          rec[is_retweet_index]))
 
     # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
-    result_tuples = result_tuples.toDF().toJSON()
     result_tuples.saveAsTextFile(PATH_TO_FILE_RESULT)
 
 
