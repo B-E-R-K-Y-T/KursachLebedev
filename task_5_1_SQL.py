@@ -1,4 +1,4 @@
-from config import URL, NAME_APP_SQL, PATH_TO_FILE, NAME_DB
+from config import URL, NAME_APP_SQL, PATH_TO_FILE, NAME_DB, PATH_TO_FILE_RESULT
 from pyspark.sql import SparkSession
 
 
@@ -41,6 +41,10 @@ def main():
                   f"WHERE ({is_retweet} = True) AND ({tweet_time} LIKE '2015%')"
     # Вывод данных на экран.
     spark.sql(request_sql).show()
+
+    # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
+    dfj = data_frame.toJSON()
+    dfj.saveAsTextFile(PATH_TO_FILE_RESULT)
 
 
 if __name__ == '__main__':
