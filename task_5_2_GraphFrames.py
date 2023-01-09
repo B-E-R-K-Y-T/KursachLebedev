@@ -1,6 +1,6 @@
 from graphframes import *
 
-from config import URL, NAME_APP_GF, PATH_TO_FILE, NAME_DB
+from config import URL, NAME_APP_GF, PATH_TO_FILE, NAME_DB, PATH_TO_FILE_RESULT
 from pyspark.sql import SparkSession
 
 
@@ -32,9 +32,14 @@ def main():
     g.inDegrees.show()
 
     # Найти все твиты, которые ретвитнули
-    r = g.find('(a)-[e]->(b)')
+    result = g.find('(a)-[e]->(b)')
+
     # Показать результат
-    r.show()
+    result.show()
+
+    # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
+    result_json = result.toJSON()
+    result_json.saveAsTextFile(PATH_TO_FILE_RESULT)
 
 
 if __name__ == '__main__':
