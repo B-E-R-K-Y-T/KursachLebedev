@@ -37,14 +37,13 @@ def main():
 
     # SQL запрос к представлению в виде БД нашего файла, с целью получения нужных нам данных
     request_sql = f"SELECT {tweet_text}, {tweet_time}, {is_retweet} " \
-                  f"FROM global_temp.{NAME_DB} " \
-                  f"WHERE ({is_retweet} = True) AND ({tweet_time} LIKE '2015%')"
+                              f"FROM global_temp.{NAME_DB} " \
+                              f"WHERE ({is_retweet} = True) AND ({tweet_time} LIKE '2015%')"
     # Вывод данных на экран.
     spark.sql(request_sql).show()
 
     # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
-    dfj = data_frame.toJSON()
-    dfj.saveAsTextFile(PATH_TO_FILE_RESULT)
+    spark.createDataFrame(request_sql).saveAsTextFile(PATH_TO_FILE_RESULT)
 
 
 if __name__ == '__main__':
