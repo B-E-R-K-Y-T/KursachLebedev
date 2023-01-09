@@ -52,8 +52,8 @@ def main():
     is_retweet_index = 19
 
     # Инициализируем два паттерна регулярных выражений для поиска соответствующих вхождений.
-    rp_tweet_time = re.compile('2015')
-    rp_is_retweet = re.compile('TRUE')
+    rp_tweet_time = re.compile(r'2015\.+')
+    rp_is_retweet = re.compile(r'true')
     # Производим фильтрацию данных по паттернам в файловой системе.
     filtered: RDD = filter_file(records, lambda rec: rp_tweet_time.match(rec[tweet_time_index]) and
                                                      rp_is_retweet.match(rec[is_retweet_index]))
@@ -64,6 +64,7 @@ def main():
                                                          rec[is_retweet_index]))
 
     # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
+    result_tuples = result_tuples.toDF().toJSON()
     result_tuples.saveAsTextFile(PATH_TO_FILE_RESULT)
 
 
