@@ -44,7 +44,7 @@ def main():
 
     # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
     result = spark.sql(request_sql).toJSON()
-    result.saveAsTextFile()
+    result.saveAsTextFile(PATH_TO_FILE_RESULT)
 
 
 if __name__ == '__main__':
