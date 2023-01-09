@@ -1,5 +1,4 @@
 from config import URL, NAME_APP_SQL, PATH_TO_FILE, NAME_DB, PATH_TO_FILE_RESULT
-from pyspark import RDD
 from pyspark.sql import SparkSession
 
 
