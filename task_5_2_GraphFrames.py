@@ -24,7 +24,7 @@ def main():
 
     # Создание вершин и ребер
     v = spark.sql(f'SELECT tweetid AS id FROM {NAME_DB}')
-    e = spark.sql(f'SELECT tweetid AS src, retweet_userid AS dst FROM {NAME_DB}')
+    e = spark.sql(f'SELECT tweetid AS src, retweet_userid AS dst FROM {NAME_DB} WHERE retweet_userid IS NOT null')
     # Создание графа
     g = GraphFrame(v, e)
 
