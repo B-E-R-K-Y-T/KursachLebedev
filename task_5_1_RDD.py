@@ -1,6 +1,6 @@
 import re
 
-from config import URL, NAME_APP, PATH_TO_FILE, PATH_TO_FILE_RESULT
+from config import URL, NAME_APP_RDD, PATH_TO_FILE, PATH_TO_FILE_RESULT
 from pyspark.context import SparkContext, RDD
 
 
@@ -29,7 +29,7 @@ def save_as_text_file_obj(obj: RDD, path: str):
 
 def main():
     # Выполняем подключение к Spark по URL и задаем имя приложения NAME_APP
-    sc: SparkContext = SparkContext(URL, NAME_APP)
+    sc: SparkContext = SparkContext(URL, NAME_APP_RDD)
 
     # Получаем объект файла из спарка.
     lines: RDD = get_file_from_spark(sc, PATH_TO_FILE)

@@ -1,4 +1,4 @@
-from config import URL, NAME_APP, PATH_TO_FILE, NAME_DB
+from config import URL, NAME_APP_SQL, PATH_TO_FILE, NAME_DB
 from pyspark.sql import SparkSession
 
 
@@ -15,7 +15,7 @@ def main():
     # Подключаемся к ФС спарк. И создаем ссесию БД
     spark = SparkSession.builder \
         .master(URL) \
-        .appName(NAME_APP) \
+        .appName(NAME_APP_SQL) \
         .getOrCreate()
 
     # Получаем файл csv из ФС, с которым будем работать.
