@@ -82,8 +82,7 @@ def main():
                                                     rec[is_retweet_index]))
 
     # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
-    result_tuples = result_tuples.toDF().toJSON()
-    result_tuples.saveAsTextFile(PATH_TO_FILE_RESULT)
+    result_tuples.save_as_text_file_obj(PATH_TO_FILE_RESULT)
 
 
 if __name__ == '__main__':
