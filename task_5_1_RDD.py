@@ -11,7 +11,6 @@ from pyspark.context import SparkContext
 from collections import Counter
 
 
-
 # Просто обёртки над Spark RDD API:
 # ----------------------------------------------------------------------------------------------------------------------
 def get_file_from_spark(obj, path):
@@ -32,6 +31,8 @@ def reduceByKey_obj(obj, pred):
 
 def save_as_text_file_obj(obj, path):
     obj.saveAsTextFile(path)
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -73,12 +74,12 @@ def main():
     rp_is_retweet = re.compile('TRUE')
     # Производим фильтрацию данных по паттернам в файловой системе.
     filtered = filter_file(records, lambda rec: rp_tweet_time.match(rec[tweet_time_index]) and
-                                                     rp_is_retweet.match(rec[is_retweet_index]))
+                                                rp_is_retweet.match(rec[is_retweet_index]))
 
     # Получаем отфильтрованный результат.
     result_tuples = map_file(filtered, lambda rec: (rec[tweet_text_index],
-                                                         rec[tweet_time_index],
-                                                         rec[is_retweet_index]))
+                                                    rec[tweet_time_index],
+                                                    rec[is_retweet_index]))
 
     # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
     save_as_text_file_obj(result_tuples, PATH_TO_FILE_RESULT)
