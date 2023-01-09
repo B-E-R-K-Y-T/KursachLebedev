@@ -28,14 +28,16 @@ def save_as_text_file_obj(obj: RDD, path: str):
 
 
 def main():
+    # Выполняем подключение к Spark по URL и задаем имя приложения NAME_APP
     sc: SparkContext = SparkContext(URL, NAME_APP)
 
+    # Получаем объект файла из спарка.
     lines: RDD = get_file_from_spark(sc, PATH_TO_FILE)
 
     # Отрезаем заголовок в CSV файле, так как он не нужен
     header = lines.first()
 
-    # Хуярим отфильтрованные с помощью лямбды строки.
+    # Отрезаем заголовки от CSV файла
     lines_filtered: RDD = filter_file(lines, lambda row: row != header)
 
     # Делим строки на поля, чтобы применять операции реляционной алгебры
@@ -51,16 +53,19 @@ def main():
     tweet_time_index = 14
     is_retweet_index = 19
 
+    # Инициализируем два паттерна регулярных выражений для поиска соответствующих вхождений.
     rp_tweet_time = re.compile('2015')
     rp_is_retweet = re.compile('TRUE')
+    # Производим фильтрацию данных по паттернам в файловой системе.
     filtered: RDD = filter_file(records, lambda rec: rp_tweet_time.match(rec[tweet_time_index]) and
                                                      rp_is_retweet.match(rec[is_retweet_index]))
 
+    # Получаем отфильтрованный результат.
     result_tuples: RDD = map_file(filtered, lambda rec: (rec[tweet_text_index],
                                                          rec[tweet_time_index],
                                                          rec[is_retweet_index]))
 
-    # max_temp: RDD = reduceByKey_obj(result_tuples, lambda a, b: a if a > b else b)
+    # Сохраняем результат в файл PATH_TO_FILE_RESULT в ФС
     save_as_text_file_obj(result_tuples, PATH_TO_FILE_RESULT)
 
 
