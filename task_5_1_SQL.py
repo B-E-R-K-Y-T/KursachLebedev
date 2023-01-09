@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession
 
 # Просто обёртки над Spark SQL API:
 # ----------------------------------------------------------------------------------------------------------------------
-def get_file_csv_from_spark(obj: SparkSession, path: str, infer_schema, header, sep):
+def get_file_csv_from_spark(obj, path, infer_schema, header, sep):
     return obj.read.csv(path, inferSchema=infer_schema, header=header, sep=sep)
 
 
