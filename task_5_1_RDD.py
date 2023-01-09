@@ -36,8 +36,6 @@ def main():
 
     # Отрезаем заголовок в CSV файле, так как он не нужен
     header = lines.first()
-
-    # Отрезаем заголовки от CSV файла
     lines_filtered: RDD = filter_file(lines, lambda row: row != header)
 
     # Делим строки на поля, чтобы применять операции реляционной алгебры
